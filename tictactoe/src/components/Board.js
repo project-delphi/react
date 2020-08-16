@@ -1,4 +1,5 @@
 import React from "react";
+import Square from "./Square";
 
 const Board = ({ squares, onClick }) => {
   <div className="board">
