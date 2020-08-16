@@ -11,14 +11,39 @@ const Game = () => {
 
   const handleClick = (i) => {
     const squares = history[stepNumber];
-    if (winner || squares[i]) return;
-    squares[i] = x0;
-    setStepNumber(stepNumber + 1);
-    setHistory([history.slice(0, stepNumber), squares]);
+    if (winner || squares[i]) return null;
+    squares[i] = xO;
+    setHistory([...history.slice(0, stepNumber + 1), squares]);
     setXisNext(!xIsNext);
+    setStepNumber(stepNumber + 1);
   };
-  const jumpTo = (move) => {};
-  const renderMoves = () => {};
+
+  const jumpTo = (step) => {
+    setStepNumber(step);
+    setXisNext(step % 2 === 0);
+  };
+
+  const renderMoves = () => {
+    return (
+      <ul>
+        {history.map((_step, move) => {
+          const destination = move ? `Go to move #${move}` : `Go to start`;
+          return (
+            <li key={move}>
+              <button
+                onClick={() => {
+                  jumpTo(move);
+                }}
+              >
+                {destination}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
+
   return (
     <>
       <h1>React Tic Tac Toe - With Hooks</h1>
@@ -28,7 +53,7 @@ const Game = () => {
           <h3>History</h3>
           {renderMoves()}
         </div>
-        <h3>{winner ? "Winner " + winner : "Next Player: " + xo}</h3>
+        <h3>{winner ? "Winner " + winner : "Next Player: " + xO}</h3>
       </div>
     </>
   );
