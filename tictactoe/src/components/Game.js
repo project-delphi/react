@@ -6,19 +6,20 @@ const Game = () => {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXisNext] = useState(true);
-  const winner = calculateWinner(history[stepNumber]);
+  const [squares, setSquares] = useState(history[stepNumber]);
+  const winner = calculateWinner(squares);
   const xO = xIsNext ? "X" : "O";
 
   const handleClick = (i) => {
-    const squares = history[stepNumber];
     if (winner || squares[i]) return null;
-    squares[i] = xO;
+    setSquares(squares.map((square, index) => (index === i ? xO : square)));
     setHistory([...history.slice(0, stepNumber + 1), squares]);
     setXisNext(!xIsNext);
     setStepNumber(stepNumber + 1);
   };
 
   const jumpTo = (step) => {
+    setSquares(history[step + 1]);
     setStepNumber(step);
     setXisNext(step % 2 === 0);
   };
@@ -47,7 +48,7 @@ const Game = () => {
   return (
     <>
       <h1>React Tic Tac Toe - With Hooks</h1>
-      <Board squares={history[stepNumber]} onClick={handleClick}></Board>
+      <Board squares={squares} onClick={handleClick}></Board>
       <div className="info-wrapper">
         <div>
           <h3>History</h3>
