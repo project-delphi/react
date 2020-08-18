@@ -69,3 +69,8 @@ li {
   padding: 0.5rem;
   margin: 0.5rem 1rem;
 }
+
+main {
+  display: flex;
+  justify-content: space-around;
+}
